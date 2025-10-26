@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Meet Single Girls Near You!</title>
+<style>
+body {margin:0;font-family:'Arial',sans-serif;background:linear-gradient(135deg,#ff7eb9,#ff758c);display:flex;flex-direction:column;align-items:center;min-height:100vh;color:#fff;text-align:center;}
+.container {padding:20px;background:rgba(0,0,0,0.35);border-radius:20px;max-width:450px;width:90%;box-shadow:0 8px 20px rgba(0,0,0,0.5);animation:fadeIn 1s ease;}
+h1{font-size:28px;margin-bottom:10px;}
+p{font-size:16px;margin-bottom:15px;line-height:1.4;}
+.btn{display:inline-block;background:#ffd700;color:#000;padding:15px 25px;font-size:18px;font-weight:bold;border-radius:50px;text-decoration:none;transition:0.3s;margin:10px 0;}
+.btn:hover{transform:scale(1.05);background:#ffae00;}
+.heart{animation:heartbeat 1s infinite;display:inline-block;font-size:28px;margin-left:5px;}
+@keyframes heartbeat{0%,100%{transform:scale(1);}25%,75%{transform:scale(1.2);}50%{transform:scale(1);}}
+@keyframes fadeIn{0%{opacity:0;transform:translateY(30px);}100%{opacity:1;transform:translateY(0);}}
+.slider{position:relative;max-width:100%;margin:auto;overflow:hidden;border-radius:15px;}
+.slide{width:100%;display:none;border-radius:15px;}
+#popup{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.7);justify-content:center;align-items:center;}
+#popup .popup-content{background:#fff;color:#000;padding:20px;border-radius:15px;text-align:center;max-width:300px;width:90%;}
+.countdown{margin-top:15px;font-weight:bold;color:#ffd700;font-size:16px;}
+@media(max-width:500px){h1{font-size:24px;}.btn{font-size:16px;padding:12px 20px;}}
+</style>
+</head>
+<body>
+
+<div class="container">
+  <h1>💘 Meet Single Girls Near You!</h1>
+  <p>US locals are ready to chat. Click below to meet instantly! <span class="heart">❤️</span></p>
+  
+  <!-- Slider -->
+  <div class="slider">
+    <img src="https://images.pexels.com/photos/774909/pexels-photo-774909.jpeg" class="slide" alt="Happy US girl">
+    <img src="https://images.pexels.com/photos/415829/pexels-photo-415829.jpeg" class="slide" alt="Smiling US girl">
+    <img src="https://images.pexels.com/photos/3769716/pexels-photo-3769716.jpeg" class="slide" alt="US girl chatting">
+  </div>
+  
+  <!-- CTA Buttons -->
+  <a class="btn" href="https://www.effectivegatecpm.com/eh3xpk67?key=eee65cc76b0f0287bd9d74af7d34c11f" target="_blank">Meet Now 💘</a>
+  <a class="btn" href="https://www.effectivegatecpm.com/eh3xpk67?key=eee65cc76b0f0287bd9d74af7d34c11f" target="_blank">Start Chat 💌</a>
+  
+  <!-- Countdown Timer -->
+  <div class="countdown" id="countdown"></div>
+</div>
+
+<!-- Popup Modal -->
+<div id="popup">
+  <div class="popup-content">
+    <h2>US Singles Waiting!</h2>
+    <p>Click below to start chatting now 💌</p>
+    <a class="btn" href="https://www.effectivegatecpm.com/eh3xpk67?key=eee65cc76b0f0287bd9d74af7d34c11f" target="_blank">Meet Now</a>
+  </div>
+</div>
+
+<script>
+  // Slider
+  let slides=document.querySelectorAll('.slide'); let index=0;
+  function showSlide(){slides.forEach((s)=>s.style.display='none'); slides[index].style.display='block'; index=(index+1)%slides.length;}
+  setInterval(showSlide,3000); showSlide();
+
+  // Countdown
+  let timeLeft=60; let countdown=document.getElementById('countdown');
+  setInterval(function(){countdown.innerHTML="Offer expires in: "+timeLeft+"s"; timeLeft--; if(timeLeft<0) timeLeft=0;},1000);
+
+  // Popup
+  setTimeout(function(){document.getElementById('popup').style.display='flex';},5000);
+</script>
+
+</body>
+</html>
