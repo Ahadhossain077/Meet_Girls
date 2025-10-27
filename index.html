@@ -1,69 +1,794 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Meet Single Girls Near You!</title>
-<style>
-body {margin:0;font-family:'Arial',sans-serif;background:linear-gradient(135deg,#ff7eb9,#ff758c);display:flex;flex-direction:column;align-items:center;min-height:100vh;color:#fff;text-align:center;}
-.container {padding:20px;background:rgba(0,0,0,0.35);border-radius:20px;max-width:450px;width:90%;box-shadow:0 8px 20px rgba(0,0,0,0.5);animation:fadeIn 1s ease;}
-h1{font-size:28px;margin-bottom:10px;}
-p{font-size:16px;margin-bottom:15px;line-height:1.4;}
-.btn{display:inline-block;background:#ffd700;color:#000;padding:15px 25px;font-size:18px;font-weight:bold;border-radius:50px;text-decoration:none;transition:0.3s;margin:10px 0;}
-.btn:hover{transform:scale(1.05);background:#ffae00;}
-.heart{animation:heartbeat 1s infinite;display:inline-block;font-size:28px;margin-left:5px;}
-@keyframes heartbeat{0%,100%{transform:scale(1);}25%,75%{transform:scale(1.2);}50%{transform:scale(1);}}
-@keyframes fadeIn{0%{opacity:0;transform:translateY(30px);}100%{opacity:1;transform:translateY(0);}}
-.slider{position:relative;max-width:100%;margin:auto;overflow:hidden;border-radius:15px;}
-.slide{width:100%;display:none;border-radius:15px;}
-#popup{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.7);justify-content:center;align-items:center;}
-#popup .popup-content{background:#fff;color:#000;padding:20px;border-radius:15px;text-align:center;max-width:300px;width:90%;}
-.countdown{margin-top:15px;font-weight:bold;color:#ffd700;font-size:16px;}
-@media(max-width:500px){h1{font-size:24px;}.btn{font-size:16px;padding:12px 20px;}}
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Meet Local Singles | Instant Connections</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #ff2e63;
+            --secondary: #ff7eb9;
+            --accent: #ffd700;
+            --dark: #252a34;
+            --light: #f9f9f9;
+            --text: #333333;
+            --shadow: 0 10px 30px rgba(0,0,0,0.15);
+            --transition: all 0.3s ease;
+            --instagram-gradient: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #ff7eb9, #ff758c, #ff2e63);
+            color: var(--text);
+            line-height: 1.6;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        body::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="100" height="100" opacity="0.05"><defs><pattern id="hearts" width="10" height="10" patternUnits="userSpaceOnUse"><path d="M5,2.5 C5,1 7,0 8,1 C9,0 11,1 11,2.5 C11,4 9,5 8,6 C7,5 5,4 5,2.5 Z" fill="white"/></pattern></defs><rect width="100" height="100" fill="url(%23hearts)"/></svg>');
+            z-index: -1;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 500px;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            animation: fadeInUp 0.8s ease;
+            position: relative;
+            margin-bottom: 20px;
+        }
+
+        .header {
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            color: white;
+            padding: 25px 20px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+            z-index: 0;
+        }
+
+        .header h1 {
+            font-size: 28px;
+            margin-bottom: 10px;
+            position: relative;
+            z-index: 1;
+            text-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+
+        .header p {
+            font-size: 16px;
+            opacity: 0.9;
+            position: relative;
+            z-index: 1;
+        }
+
+        .heart {
+            animation: heartbeat 1.2s infinite;
+            display: inline-block;
+            margin: 0 5px;
+        }
+
+        @keyframes heartbeat {
+            0%, 100% { transform: scale(1); }
+            25%, 75% { transform: scale(1.2); }
+            50% { transform: scale(1); }
+        }
+
+        @keyframes fadeInUp {
+            0% { opacity: 0; transform: translateY(30px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+
+        .stories-container {
+            display: flex;
+            padding: 15px 10px;
+            overflow-x: auto;
+            background: white;
+            border-bottom: 1px solid #eee;
+            scrollbar-width: none;
+        }
+
+        .stories-container::-webkit-scrollbar {
+            display: none;
+        }
+
+        .story {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 0 8px;
+            cursor: pointer;
+        }
+
+        .story-avatar {
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            padding: 3px;
+            background: var(--instagram-gradient);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 5px;
+        }
+
+        .story-avatar img {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid white;
+        }
+
+        .story-username {
+            font-size: 12px;
+            font-weight: 600;
+            max-width: 70px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .user-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            padding: 15px;
+        }
+
+        .user-card {
+            border-radius: 10px;
+            overflow: hidden;
+            position: relative;
+            height: 150px;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .user-card:hover {
+            transform: scale(1.05);
+        }
+
+        .user-card img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .user-info {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);
+            color: white;
+            padding: 8px;
+            font-size: 12px;
+        }
+
+        .user-name {
+            font-weight: bold;
+        }
+
+        .user-age {
+            font-size: 10px;
+            opacity: 0.8;
+        }
+
+        .content {
+            padding: 25px;
+            text-align: center;
+        }
+
+        .benefits {
+            display: flex;
+            justify-content: space-around;
+            margin: 20px 0;
+            flex-wrap: wrap;
+        }
+
+        .benefit {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 10px;
+            max-width: 120px;
+        }
+
+        .benefit-icon {
+            width: 50px;
+            height: 50px;
+            background: var(--primary);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 10px;
+            color: white;
+            font-size: 20px;
+        }
+
+        .benefit p {
+            font-size: 12px;
+            font-weight: 600;
+            text-align: center;
+        }
+
+        .cta-section {
+            margin: 25px 0;
+        }
+
+        .cta-title {
+            font-size: 22px;
+            color: var(--primary);
+            margin-bottom: 15px;
+            font-weight: 700;
+        }
+
+        .btn {
+            display: block;
+            width: 100%;
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            color: white;
+            padding: 16px 20px;
+            font-size: 18px;
+            font-weight: 700;
+            border: none;
+            border-radius: 50px;
+            text-decoration: none;
+            transition: var(--transition);
+            margin: 15px 0;
+            box-shadow: 0 5px 15px rgba(255, 46, 99, 0.4);
+            position: relative;
+            overflow: hidden;
+            text-align: center;
+        }
+
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            transition: 0.5s;
+        }
+
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(255, 46, 99, 0.6);
+        }
+
+        .btn:hover::before {
+            left: 100%;
+        }
+
+        .btn-secondary {
+            background: linear-gradient(to right, var(--accent), #ffae00);
+            box-shadow: 0 5px 15px rgba(255, 215, 0, 0.4);
+        }
+
+        .btn-secondary:hover {
+            box-shadow: 0 8px 20px rgba(255, 215, 0, 0.6);
+        }
+
+        .countdown {
+            background: var(--dark);
+            color: white;
+            padding: 15px;
+            border-radius: 10px;
+            margin: 20px 0;
+            font-weight: 700;
+            font-size: 16px;
+            text-align: center;
+        }
+
+        .countdown span {
+            color: var(--accent);
+            font-size: 18px;
+        }
+
+        .testimonials {
+            background: rgba(255, 255, 255, 0.7);
+            border-radius: 15px;
+            padding: 20px;
+            margin: 20px 0;
+            text-align: left;
+        }
+
+        .testimonial {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .testimonial:last-child {
+            margin-bottom: 0;
+        }
+
+        .testimonial-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            overflow: hidden;
+            margin-right: 15px;
+            flex-shrink: 0;
+        }
+
+        .testimonial-avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .testimonial-content h4 {
+            font-size: 16px;
+            margin-bottom: 5px;
+            color: var(--primary);
+        }
+
+        .testimonial-content p {
+            font-size: 14px;
+            font-style: italic;
+        }
+
+        .footer {
+            background: var(--dark);
+            color: white;
+            padding: 15px;
+            text-align: center;
+            font-size: 12px;
+        }
+
+        .footer a {
+            color: var(--accent);
+            text-decoration: none;
+        }
+
+        #popup {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .popup-content {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            max-width: 400px;
+            width: 90%;
+            text-align: center;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.3);
+            animation: popIn 0.5s ease;
+            position: relative;
+        }
+
+        .popup-close {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: none;
+            border: none;
+            font-size: 20px;
+            cursor: pointer;
+            color: var(--text);
+            opacity: 0.7;
+            transition: var(--transition);
+        }
+
+        .popup-close:hover {
+            opacity: 1;
+            transform: scale(1.1);
+        }
+
+        .popup-content h2 {
+            color: var(--primary);
+            margin-bottom: 15px;
+            font-size: 24px;
+        }
+
+        .popup-content p {
+            margin-bottom: 20px;
+            font-size: 16px;
+        }
+
+        @keyframes popIn {
+            0% { opacity: 0; transform: scale(0.8); }
+            100% { opacity: 1; transform: scale(1); }
+        }
+
+        @media (max-width: 500px) {
+            .header h1 { font-size: 24px; }
+            .btn { font-size: 16px; padding: 14px 20px; }
+            .benefits { justify-content: center; }
+        }
+
+        .floating-cta {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: var(--primary);
+            color: white;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            box-shadow: 0 5px 15px rgba(255, 46, 99, 0.5);
+            z-index: 100;
+            animation: pulse 2s infinite;
+            cursor: pointer;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); box-shadow: 0 5px 15px rgba(255, 46, 99, 0.5); }
+            50% { transform: scale(1.1); box-shadow: 0 8px 20px rgba(255, 46, 99, 0.7); }
+            100% { transform: scale(1); box-shadow: 0 5px 15px rgba(255, 46, 99, 0.5); }
+        }
+
+        .age-verification {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 2000;
+        }
+
+        .verification-box {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            text-align: center;
+            max-width: 400px;
+            width: 90%;
+        }
+
+        .verification-box h2 {
+            color: var(--primary);
+            margin-bottom: 15px;
+        }
+
+        .verification-box p {
+            margin-bottom: 20px;
+        }
+
+        .verification-buttons {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .verification-buttons button {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .btn-enter {
+            background: var(--primary);
+            color: white;
+        }
+
+        .btn-exit {
+            background: #eee;
+            color: var(--text);
+        }
+    </style>
 </head>
 <body>
 
+<!-- Age Verification Modal -->
+<div class="age-verification" id="ageVerification">
+    <div class="verification-box">
+        <h2>Age Verification Required</h2>
+        <p>This website contains adult content. You must be 18+ to enter.</p>
+        <p>Are you 18 years of age or older?</p>
+        <div class="verification-buttons">
+            <button class="btn-enter" id="enterSite">Yes, I am 18+</button>
+            <button class="btn-exit" id="exitSite">No, I'm under 18</button>
+        </div>
+    </div>
+</div>
+
 <div class="container">
-  <h1>💘 Meet Single Girls Near You!</h1>
-  <p>US locals are ready to chat. Click below to meet instantly! <span class="heart">❤️</span></p>
-  
-  <!-- Slider -->
-  <div class="slider">
-    <img src="https://images.pexels.com/photos/774909/pexels-photo-774909.jpeg" class="slide" alt="Happy US girl">
-    <img src="https://images.pexels.com/photos/415829/pexels-photo-415829.jpeg" class="slide" alt="Smiling US girl">
-    <img src="https://images.pexels.com/photos/3769716/pexels-photo-3769716.jpeg" class="slide" alt="US girl chatting">
-  </div>
-  
-  <!-- CTA Buttons -->
-  <a class="btn" href="https://www.effectivegatecpm.com/eh3xpk67?key=eee65cc76b0f0287bd9d74af7d34c11f" target="_blank">Meet Now 💘</a>
-  <a class="btn" href="https://www.effectivegatecpm.com/eh3xpk67?key=eee65cc76b0f0287bd9d74af7d34c11f" target="_blank">Start Chat 💌</a>
-  
-  <!-- Countdown Timer -->
-  <div class="countdown" id="countdown"></div>
+    <div class="header">
+        <h1>💘 Meet 50+ Single Girls Near You!</h1>
+        <p>Click on any girl to chat instantly! <span class="heart">❤️</span></p>
+    </div>
+    
+    <!-- Instagram Stories -->
+    <div class="stories-container" id="storiesContainer">
+        <!-- Stories will be dynamically added here -->
+    </div>
+    
+    <!-- User Grid -->
+    <div class="user-grid" id="userGrid">
+        <!-- User cards will be dynamically added here -->
+    </div>
+    
+    <div class="content">
+        <!-- Benefits Section -->
+        <div class="benefits">
+            <div class="benefit">
+                <div class="benefit-icon">✓</div>
+                <p>Verified Profiles</p>
+            </div>
+            <div class="benefit">
+                <div class="benefit-icon">🔒</div>
+                <p>Secure & Private</p>
+            </div>
+            <div class="benefit">
+                <div class="benefit-icon">💬</div>
+                <p>Instant Chat</p>
+            </div>
+        </div>
+        
+        <!-- CTA Section -->
+        <div class="cta-section">
+            <h2 class="cta-title">Find Your Perfect Match Today!</h2>
+            <a class="btn" href="https://www.effectivegatecpm.com/eh3xpk67?key=eee65cc76b0f0287bd9d74af7d34c11f" target="_blank" id="smartlink">Meet Local Singles Now 💘</a>
+            <a class="btn btn-secondary" href="https://www.effectivegatecpm.com/eh3xpk67?key=eee65cc76b0f0287bd9d74af7d34c11f" target="_blank" id="smartlink2">Start Chatting Instantly 💌</a>
+        </div>
+        
+        <!-- Countdown Timer -->
+        <div class="countdown">
+            <p>Limited Time Offer: <span id="countdown">60</span> seconds remaining!</p>
+        </div>
+        
+        <!-- Testimonials -->
+        <div class="testimonials">
+            <div class="testimonial">
+                <div class="testimonial-avatar">
+                    <img src="https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg" alt="User testimonial">
+                </div>
+                <div class="testimonial-content">
+                    <h4>Mike, 28</h4>
+                    <p>"I met my girlfriend here just 2 weeks after signing up. Highly recommend!"</p>
+                </div>
+            </div>
+            <div class="testimonial">
+                <div class="testimonial-avatar">
+                    <img src="https://images.pexels.com/photos/1222271/pexels-photo-1222271.jpeg" alt="User testimonial">
+                </div>
+                <div class="testimonial-content">
+                    <h4>Alex, 31</h4>
+                    <p>"The quality of matches is amazing. So many real people looking to connect."</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="footer">
+        <p>© 2023 Dating Connections. All rights reserved. | <a href="#">Privacy Policy</a> | <a href="#">Terms of Service</a></p>
+    </div>
+</div>
+
+<!-- Floating CTA -->
+<div class="floating-cta" id="floatingCta">
+    <i class="fas fa-heart"></i>
 </div>
 
 <!-- Popup Modal -->
 <div id="popup">
-  <div class="popup-content">
-    <h2>US Singles Waiting!</h2>
-    <p>Click below to start chatting now 💌</p>
-    <a class="btn" href="https://www.effectivegatecpm.com/eh3xpk67?key=eee65cc76b0f0287bd9d74af7d34c11f" target="_blank">Meet Now</a>
-  </div>
+    <div class="popup-content">
+        <button class="popup-close">&times;</button>
+        <h2>Don't Miss Out!</h2>
+        <p>Join thousands of singles finding love in your area. Start chatting now! 💌</p>
+        <a class="btn" href="https://www.effectivegatecpm.com/eh3xpk67?key=eee65cc76b0f0287bd9d74af7d34c11f" target="_blank" id="smartlink3">Join Now - It's Free!</a>
+    </div>
 </div>
 
 <script>
-  // Slider
-  let slides=document.querySelectorAll('.slide'); let index=0;
-  function showSlide(){slides.forEach((s)=>s.style.display='none'); slides[index].style.display='block'; index=(index+1)%slides.length;}
-  setInterval(showSlide,3000); showSlide();
+    // Age Verification
+    document.getElementById('enterSite').addEventListener('click', function() {
+        document.getElementById('ageVerification').style.display = 'none';
+    });
 
-  // Countdown
-  let timeLeft=60; let countdown=document.getElementById('countdown');
-  setInterval(function(){countdown.innerHTML="Offer expires in: "+timeLeft+"s"; timeLeft--; if(timeLeft<0) timeLeft=0;},1000);
+    document.getElementById('exitSite').addEventListener('click', function() {
+        window.location.href = 'https://www.google.com';
+    });
 
-  // Popup
-  setTimeout(function(){document.getElementById('popup').style.display='flex';},5000);
+    // Girls data - 50+ profiles with different images
+    const girls = [
+        { id: 1, name: "Jessica", age: 24, image: "https://images.pexels.com/photos/733872/pexels-photo-733872.jpeg" },
+        { id: 2, name: "Sarah", age: 26, image: "https://images.pexels.com/photos/415829/pexels-photo-415829.jpeg" },
+        { id: 3, name: "Emma", age: 23, image: "https://images.pexels.com/photos/1130626/pexels-photo-1130626.jpeg" },
+        { id: 4, name: "Chloe", age: 25, image: "https://images.pexels.com/photos/1082966/pexels-photo-1082966.jpeg" },
+        { id: 5, name: "Mia", age: 22, image: "https://images.pexels.com/photos/774909/pexels-photo-774909.jpeg" },
+        { id: 6, name: "Sophia", age: 27, image: "https://images.pexels.com/photos/1181686/pexels-photo-1181686.jpeg" },
+        { id: 7, name: "Olivia", age: 24, image: "https://images.pexels.com/photos/1181519/pexels-photo-1181519.jpeg" },
+        { id: 8, name: "Ava", age: 26, image: "https://images.pexels.com/photos/1239291/pexels-photo-1239291.jpeg" },
+        { id: 9, name: "Isabella", age: 23, image: "https://images.pexels.com/photos/1382731/pexels-photo-1382731.jpeg" },
+        { id: 10, name: "Charlotte", age: 25, image: "https://images.pexels.com/photos/1370750/pexels-photo-1370750.jpeg" },
+        { id: 11, name: "Amelia", age: 24, image: "https://images.pexels.com/photos/1126993/pexels-photo-1126993.jpeg" },
+        { id: 12, name: "Evelyn", age: 26, image: "https://images.pexels.com/photos/1181424/pexels-photo-1181424.jpeg" },
+        { id: 13, name: "Abigail", age: 23, image: "https://images.pexels.com/photos/1036623/pexels-photo-1036623.jpeg" },
+        { id: 14, name: "Harper", age: 25, image: "https://images.pexels.com/photos/1080213/pexels-photo-1080213.jpeg" },
+        { id: 15, name: "Ella", age: 24, image: "https://images.pexels.com/photos/712513/pexels-photo-712513.jpeg" },
+        { id: 16, name: "Aria", age: 26, image: "https://images.pexels.com/photos/1239291/pexels-photo-1239291.jpeg" },
+        { id: 17, name: "Scarlett", age: 23, image: "https://images.pexels.com/photos/1382731/pexels-photo-1382731.jpeg" },
+        { id: 18, name: "Grace", age: 25, image: "https://images.pexels.com/photos/1370750/pexels-photo-1370750.jpeg" },
+        { id: 19, name: "Zoey", age: 24, image: "https://images.pexels.com/photos/774909/pexels-photo-774909.jpeg" },
+        { id: 20, name: "Nora", age: 26, image: "https://images.pexels.com/photos/1181686/pexels-photo-1181686.jpeg" },
+        { id: 21, name: "Lily", age: 23, image: "https://images.pexels.com/photos/1130626/pexels-photo-1130626.jpeg" },
+        { id: 22, name: "Hannah", age: 25, image: "https://images.pexels.com/photos/1082966/pexels-photo-1082966.jpeg" },
+        { id: 23, name: "Lillian", age: 24, image: "https://images.pexels.com/photos/1181519/pexels-photo-1181519.jpeg" },
+        { id: 24, name: "Addison", age: 26, image: "https://images.pexels.com/photos/1239291/pexels-photo-1239291.jpeg" },
+        { id: 25, name: "Aubrey", age: 23, image: "https://images.pexels.com/photos/1382731/pexels-photo-1382731.jpeg" },
+        { id: 26, name: "Ellie", age: 25, image: "https://images.pexels.com/photos/1370750/pexels-photo-1370750.jpeg" },
+        { id: 27, name: "Stella", age: 24, image: "https://images.pexels.com/photos/774909/pexels-photo-774909.jpeg" },
+        { id: 28, name: "Natalie", age: 26, image: "https://images.pexels.com/photos/1181686/pexels-photo-1181686.jpeg" },
+        { id: 29, name: "Zoe", age: 23, image: "https://images.pexels.com/photos/1130626/pexels-photo-1130626.jpeg" },
+        { id: 30, name: "Leah", age: 25, image: "https://images.pexels.com/photos/1082966/pexels-photo-1082966.jpeg" },
+        { id: 31, name: "Hazel", age: 24, image: "https://images.pexels.com/photos/1181519/pexels-photo-1181519.jpeg" },
+        { id: 32, name: "Violet", age: 26, image: "https://images.pexels.com/photos/1239291/pexels-photo-1239291.jpeg" },
+        { id: 33, name: "Aurora", age: 23, image: "https://images.pexels.com/photos/1382731/pexels-photo-1382731.jpeg" },
+        { id: 34, name: "Savannah", age: 25, image: "https://images.pexels.com/photos/1370750/pexels-photo-1370750.jpeg" },
+        { id: 35, name: "Brooklyn", age: 24, image: "https://images.pexels.com/photos/774909/pexels-photo-774909.jpeg" },
+        { id: 36, name: "Bella", age: 26, image: "https://images.pexels.com/photos/1181686/pexels-photo-1181686.jpeg" },
+        { id: 37, name: "Claire", age: 23, image: "https://images.pexels.com/photos/1130626/pexels-photo-1130626.jpeg" },
+        { id: 38, name: "Skylar", age: 25, image: "https://images.pexels.com/photos/1082966/pexels-photo-1082966.jpeg" },
+        { id: 39, name: "Lucy", age: 24, image: "https://images.pexels.com/photos/1181519/pexels-photo-1181519.jpeg" },
+        { id: 40, name: "Paisley", age: 26, image: "https://images.pexels.com/photos/1239291/pexels-photo-1239291.jpeg" },
+        { id: 41, name: "Everly", age: 23, image: "https://images.pexels.com/photos/1382731/pexels-photo-1382731.jpeg" },
+        { id: 42, name: "Anna", age: 25, image: "https://images.pexels.com/photos/1370750/pexels-photo-1370750.jpeg" },
+        { id: 43, name: "Caroline", age: 24, image: "https://images.pexels.com/photos/774909/pexels-photo-774909.jpeg" },
+        { id: 44, name: "Nova", age: 26, image: "https://images.pexels.com/photos/1181686/pexels-photo-1181686.jpeg" },
+        { id: 45, name: "Genesis", age: 23, image: "https://images.pexels.com/photos/1130626/pexels-photo-1130626.jpeg" },
+        { id: 46, name: "Emilia", age: 25, image: "https://images.pexels.com/photos/1082966/pexels-photo-1082966.jpeg" },
+        { id: 47, name: "Kennedy", age: 24, image: "https://images.pexels.com/photos/1181519/pexels-photo-1181519.jpeg" },
+        { id: 48, name: "Samantha", age: 26, image: "https://images.pexels.com/photos/1239291/pexels-photo-1239291.jpeg" },
+        { id: 49, name: "Maya", age: 23, image: "https://images.pexels.com/photos/1382731/pexels-photo-1382731.jpeg" },
+        { id: 50, name: "Willow", age: 25, image: "https://images.pexels.com/photos/1370750/pexels-photo-1370750.jpeg" }
+    ];
+
+    // Function to generate stories
+    function generateStories() {
+        const storiesContainer = document.getElementById('storiesContainer');
+        
+        girls.slice(0, 15).forEach((girl, index) => {
+            const story = document.createElement('div');
+            story.className = `story ${index === 0 ? 'active' : ''}`;
+            story.innerHTML = `
+                <div class="story-avatar">
+                    <img src="${girl.image}" alt="${girl.name}">
+                </div>
+                <div class="story-username">${girl.name}</div>
+            `;
+            
+            // Add click event to open SmartLink
+            story.addEventListener('click', function() {
+                window.open('https://www.effectivegatecpm.com/eh3xpk67?key=eee65cc76b0f0287bd9d74af7d34c11f', '_blank');
+            });
+            
+            storiesContainer.appendChild(story);
+        });
+    }
+
+    // Function to generate user grid
+    function generateUserGrid() {
+        const userGrid = document.getElementById('userGrid');
+        
+        girls.forEach(girl => {
+            const userCard = document.createElement('div');
+            userCard.className = 'user-card';
+            userCard.innerHTML = `
+                <img src="${girl.image}" alt="${girl.name}">
+                <div class="user-info">
+                    <div class="user-name">${girl.name}</div>
+                    <div class="user-age">${girl.age}</div>
+                </div>
+            `;
+            
+            // Add click event to open SmartLink
+            userCard.addEventListener('click', function() {
+                window.open('https://www.effectivegatecpm.com/eh3xpk67?key=eee65cc76b0f0287bd9d74af7d34c11f', '_blank');
+            });
+            
+            userGrid.appendChild(userCard);
+        });
+    }
+
+    // Countdown Timer
+    let timeLeft = 60;
+    const countdownElement = document.getElementById('countdown');
+
+    const countdownInterval = setInterval(() => {
+        countdownElement.textContent = timeLeft;
+        timeLeft--;
+        
+        if (timeLeft < 0) {
+            clearInterval(countdownInterval);
+            countdownElement.textContent = "0";
+        }
+    }, 1000);
+
+    // Popup
+    setTimeout(() => {
+        document.getElementById('popup').style.display = 'flex';
+    }, 8000);
+
+    // Close popup
+    document.querySelector('.popup-close').addEventListener('click', () => {
+        document.getElementById('popup').style.display = 'none';
+    });
+
+    // Close popup when clicking outside
+    document.getElementById('popup').addEventListener('click', (e) => {
+        if (e.target.id === 'popup') {
+            document.getElementById('popup').style.display = 'none';
+        }
+    });
+
+    // Floating CTA
+    document.getElementById('floatingCta').addEventListener('click', function() {
+        window.open('https://www.effectivegatecpm.com/eh3xpk67?key=eee65cc76b0f0287bd9d74af7d34c11f', '_blank');
+    });
+
+    // Track clicks on SmartLinks
+    const smartLinks = document.querySelectorAll('a[id^="smartlink"]');
+    smartLinks.forEach(link => {
+        link.addEventListener('click', function() {
+            // Here you can add tracking code for analytics
+            console.log('SmartLink clicked: ' + this.href);
+        });
+    });
+
+    // Initialize content
+    generateStories();
+    generateUserGrid();
 </script>
 
 </body>
